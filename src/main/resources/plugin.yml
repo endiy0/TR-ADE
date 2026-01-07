@@ -1,0 +1,14 @@
+name: TRADE
+version: '${version}'
+main: org.toyotech.shop.Shop
+api-version: '1.21'
+authors: [Gemini]
+commands:
+  trade:
+    description: Main command for TRADE plugin
+    usage: /trade <subcommand>
+    permission: trade.admin
+permissions:
+  trade.admin:
+    description: Allows use of admin commands
+    default: op

@@ -1,0 +1,20 @@
+# TR:ADE Configuration
+
+# Backend Server URL (Web Server)
+backendBaseUrl: "http://localhost:3000"
+
+# Secret key for authentication with the backend
+# Must match PLUGIN_SECRET in Web/server.js
+pluginSecret: "secret"
+
+# Interval (in ticks) to poll for new orders
+pollIntervalTicks: 40
+
+# Interval (in ticks) to scan player inventories for debt repayment
+repayScanIntervalTicks: 20
+
+# Time (in ticks) allowed for credit repayment (default: 5 days = 120000 ticks)
+creditDaysTicks: 48000
+
+# Enable admin logging
+adminLog: true

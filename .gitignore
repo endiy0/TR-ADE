@@ -1,0 +1,29 @@
+# Gradle
+.gradle/
+build/
+out/
+*.iml
+*.ipr
+*.iws
+
+# IntelliJ
+.idea/
+
+# Node.js (Web)
+Web/node_modules/
+Web/front/node_modules/
+Web/front/dist/
+Web/front/.env
+Web/front/.env.local
+
+# Database (Web)
+Web/data/
+*.sqlite
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
