@@ -48,8 +48,47 @@ node server.js
 - `backendBaseUrl`: 웹 서버 URL로 설정하세요 (예: `http://localhost:3000`).
 - `pluginSecret`: `Web/server.js`의 `PLUGIN_SECRET`과 일치해야 합니다 (기본값: `secret`).
 
+## API 및 라우터 설정 (상세)
+
+### 기본 계정 및 비밀번호
+시스템에서 사용하는 기본 키 값입니다. 운영 환경에서는 환경 변수를 통해 변경하는 것을 권장합니다.
+
+- **Admin Key (관리자 키):** `admin`
+  - **설정 변수:** `ADMIN_KEY`
+  - **용도:** 관리자 페이지 접속 및 관리자 API 호출 인증.
+- **Plugin Secret (플러그인 통신 키):** `secret`
+  - **설정 변수:** `PLUGIN_SECRET`
+  - **용도:** 마인크래프트 서버(플러그인)와 웹 백엔드 간의 통신 인증.
+
+### 주요 라우터 (엔드포인트)
+
+#### 1. 관리자 페이지 및 API (`/admin`)
+- **웹 접근:** `http://localhost:3000/admin`
+  - 브라우저를 통해 접속하며, 물품 가격 조정 및 상점 관리를 수행합니다.
+  - 접속 시 `Admin Key` 입력을 요구합니다.
+- **API 엔드포인트:** `/api/admin/*`
+  - 인증 방식: HTTP 헤더 `x-admin-key` 또는 쿼리 파라미터 `?key=`에 키 값을 포함해야 합니다.
+
+#### 2. 상점 접속 페이지 (`/create`)
+- **웹 접근:** `http://localhost:3000/create`
+- **기능:** 플레이어가 닉네임을 입력하여 상점에 로그인하는 페이지입니다.
+- **동작 원리:** 닉네임 입력 시 내부적으로 `/create/shop/:playerId` API를 호출하여 생성된 상점 URL로 이동합니다.
+
+#### 3. 상점 URL 생성 API (`/create/shop/:playerId`)
+- **경로:** `/create/shop/:playerId` (GET)
+- **기능:** 특정 플레이어의 상점 접속을 위한 고유(인코딩된) URL을 생성합니다. (백엔드 API)
+- **예시:** `http://localhost:3000/create/shop/Steve`
+- **응답 (JSON):**
+  ```json
+  {
+    "playerName": "Steve",
+    "encoded": "U3RldmU",
+    "url": "http://localhost:3000/shop/U3RldmU"
+  }
+  ```
+
 ### 3. 사용법
-- **플레이어:** `http://localhost:3000`에 접속하여 마인크래프트 이름을 입력하세요.
+- **플레이어:** `http://localhost:3000/create`에 접속하여 마인크래프트 이름을 입력하세요.
 - **상점:** 아이템을 둘러보세요. "즉시 구매"는 즉시 차감됩니다. "외상"은 5일(마인크래프트 시간) 내에 상환해야 합니다.
 - **관리자:** `http://localhost:3000/admin`에 접속하세요. 기본 키는 `admin`입니다.
 - **상환:** 게임 내에서 화폐 아이템을 획득하세요. 부채 상환을 위해 자동으로 차감됩니다.
